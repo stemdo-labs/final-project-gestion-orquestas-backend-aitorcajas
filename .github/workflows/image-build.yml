@@ -27,7 +27,7 @@ jobs:
 
       - name: Build de la imagen
         run: |
-          docker build -t ${{steps.imagen_tageada.outputs.image_name}} .
+          docker build -t ${{steps.cargar_imagen.outputs.image_name}} .
 
       - name: Login Azure Container Registry
         uses: docker/login-action@v3
@@ -38,4 +38,4 @@ jobs:
 
       - name: Push imagen ACR
         run: |
-          docker push ${{steps.imagen_tageada.outputs.image_name}}
+          docker push ${{steps.cargar_imagen.outputs.image_name}}
