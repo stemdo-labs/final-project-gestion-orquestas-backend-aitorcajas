@@ -3,19 +3,39 @@ name: Buildear imagen del backend
 on:
   push:
     branches:
-      - main
+      - build
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+
       - name: Extraer versión
         id: version
         run: |
-          VERSION=$(grep -oP '<version>\K[^\<]+' pom.xml | head -n 1)
+          VERSION=$(grep -oP '<version>\K[^\<]+' pom.xml | sed -n '2p')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "app_version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Mostrar
+      - name: Cargar el nombre de la imagen
+        id: cargar_imagen
+        uses: ./.github/action
+        with:
+          version: ${{steps.version.outputs.app_version}}
+
+      - name: Build de la imagen
         run: |
-          echo "${{ steps.version.outputs.app_version }}"
+          docker build -t ${{steps.cargar_imagen.outputs.image_name}} .
+
+      - name: Login Azure Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: acajascr.azurecr.io
+          username: ${{ secrets.ARM_CLIENT_ID }}
+          password: ${{ secrets.ARM_CLIENT_SECRET }}
+
+      - name: Push imagen ACR
+        run: |
+          docker push ${{steps.cargar_imagen.outputs.image_name}}
