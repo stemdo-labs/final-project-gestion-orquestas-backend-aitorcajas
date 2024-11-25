@@ -25,6 +25,17 @@ jobs:
         with:
           version: ${{steps.version.outputs.app_version}}
 
-      - name: Mostrar
+      - name: Build de la imagen
         run: |
-          echo "${{steps.cargar_imagen.outputs.image_name}}"
+          docker build -t ${{steps.imagen_tageada.outputs.image_name}} .
+
+      - name: Login Azure Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: acajascr.azurecr.io
+          username: ${{ secrets.ARM_CLIENT_ID }}
+          password: ${{ secrets.ARM_CLIENT_SECRET }}
+
+      - name: Push imagen ACR
+        run: |
+          docker push ${{steps.imagen_tageada.outputs.image_name}}
