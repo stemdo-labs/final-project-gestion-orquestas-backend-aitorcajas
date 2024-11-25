@@ -3,12 +3,15 @@ name: Buildear imagen del backend
 on:
   push:
     branches:
-      - main
+      - build
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+
       - name: Extraer versión
         id: version
         run: |
