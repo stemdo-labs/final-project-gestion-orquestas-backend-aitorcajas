@@ -1,0 +1,21 @@
+name: Buildear imagen del backend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extraer versión
+        id: version
+        run: |
+          VERSION=$(grep -oP '<version>\K[^\<]+' pom.xml | head -n 1)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "app_version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Mostrar
+        run: |
+          echo "${{ steps.version.outputs.app_version }}"
