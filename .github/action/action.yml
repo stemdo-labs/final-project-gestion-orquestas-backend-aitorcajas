@@ -10,6 +10,6 @@ runs:
     - name: Nombre tageado de la imagen
       id: imagen_tageada
       run: |
-        IMAGEN_TAGEADA="acajascr.azurecr.io/backend:${{inputs.version}}
+        IMAGEN_TAGEADA="acajascr.azurecr.io/backend:${{inputs.version}}"
         echo "image_name=$IMAGEN_TAGEADA" >> $GITHUB_OUTPUT
       shell: bash
