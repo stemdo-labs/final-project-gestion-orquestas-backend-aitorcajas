@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    uses: final-project-exercise-aitorcajas/.github/workflows/image-build.yml@main
+    uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/image-build.yml@main
     with:
       repo: ${{ github.repository }}
     secrets:
