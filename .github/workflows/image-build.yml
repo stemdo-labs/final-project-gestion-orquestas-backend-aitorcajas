@@ -19,6 +19,12 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "app_version=$VERSION" >> $GITHUB_OUTPUT
 
+      - name: Cargar el nombre de la imagen
+        id: cargar_imagen
+        uses: ./.github/action
+        with:
+          version: ${{steps.version.outputs.app_version}}
+
       - name: Mostrar
         run: |
-          echo "${{ steps.version.outputs.app_version }}"
+          echo "${{steps.cargar_imagen.outputs.image_name}}"
