@@ -6,3 +6,6 @@ on:
 jobs:
   build:
     uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/image-build.yml@main
+    with:
+      client: ${{ secrets.ARM_CLIENT_ID }}
+      secret: ${{ secrets.ARM_CLIENT_SECRET }}
