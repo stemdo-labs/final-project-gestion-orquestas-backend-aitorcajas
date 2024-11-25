@@ -3,6 +3,9 @@ name: Action para crear la imagen y tagearla
 inputs:
   version:
     required: true
+outputs:
+  image_name:
+    value: ${{steps.imagen_tageada.outputs.image_name}}
 
 runs:
   using: composite
