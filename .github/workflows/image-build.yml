@@ -15,7 +15,7 @@ jobs:
       - name: Extraer versión
         id: version
         run: |
-          VERSION=$(grep -oP '<version>\K[^\<]+' pom.xml | head -n 1)
+          VERSION=$(grep -oP '<version>\K[^\<]+' pom.xml | sed -n '2p')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "app_version=$VERSION" >> $GITHUB_OUTPUT
 
