@@ -16,4 +16,4 @@ jobs:
     needs: ci
     steps:
       - name: Mostrar versión del backend
-        run: echo "${{ needs.ci.outputs.app_desarrollo }}"
+        run: echo "${{ needs.ci.outputs.version }}"
