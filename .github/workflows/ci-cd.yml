@@ -12,8 +12,8 @@ jobs:
     secrets: inherit
 
   cd:
-    runs-on: ubuntu-latest
     needs: ci
-    steps:
-      - name: Mostrar versión del backend
-        run: echo "${{ needs.ci.outputs.imagen }}"
+    uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/cd.yml@develop
+    with:
+      imagen: ${{ needs.ci.outputs.desarrollo }}
+    secrets: inherit
