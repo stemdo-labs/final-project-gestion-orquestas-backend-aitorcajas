@@ -1,4 +1,4 @@
-name: Buildear imagen del backend
+name: CI-CD backend
 
 on:
   workflow_dispatch:
@@ -15,5 +15,5 @@ jobs:
     needs: ci
     uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/cd.yml@develop
     with:
-      imagen: ${{ needs.ci.outputs.desarrollo }}
+      desarrollo: ${{ needs.ci.outputs.desarrollo }}
     secrets: inherit
