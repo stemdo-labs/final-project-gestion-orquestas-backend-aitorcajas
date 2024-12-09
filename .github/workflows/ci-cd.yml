@@ -18,8 +18,9 @@ jobs:
     secrets: inherit
 
   cd:
-    needs: ci
+    needs: [ci, environment]
     uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/cd.yml@main
     with:
       desarrollo: ${{ needs.ci.outputs.desarrollo }}
+      entorno: ${{ needs.environment.outputs.entorno }}
     secrets: inherit
