@@ -1,6 +1,5 @@
 @Library('prueba')
 @Library('ci')
-// environmentPipeline() 
-def entorno = prueba()
+def entorno = environmentPipeline()
 echo "El entorno es: ${entorno}"
 ci(entorno)
