@@ -1,21 +1,5 @@
 @Library('environmentPipeline') 
 @Library('ci') 
-
-pipeline {
-    agent any
-
-    stages {
-        stage('Definir Entorno') {
-            steps {
-                script {
-                    // Llamar a la librería environmentPipeline para obtener el entorno
-                    def entorno = environmentPipeline()  // Esto devuelve 'production' o 'development'
-                    echo "El entorno es: ${entorno}"
-
-                    // Llamar a la librería ci, pasando el entorno como parámetro
-                    ci(entorno)  // Aquí pasas el entorno definido a la librería ci
-                }
-            }
-        }
-    }
-}
+def entorno = environmentPipeline()
+echo "El entorno es: ${entorno}"
+ci(entorno)
