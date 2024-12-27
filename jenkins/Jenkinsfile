@@ -1,5 +1,14 @@
-@Library('environmentPipeline') 
-@Library('ci') 
-def entorno = environmentPipeline()
-echo "El entorno es: ${entorno}"
-ci(entorno)
+pipeline {
+    agent any
+
+    stages {
+        stage('Cargar y Ejecutar Pipeline Común') {
+            steps {
+                script {
+                    def pipelineTemplate = load 'stemdo-labs/iac-ibmcloud-aitorcajas/vars/environmentPipeline.groovy'
+                    pipelineTemplate.call()
+                }
+            }
+        }
+    }
+}
