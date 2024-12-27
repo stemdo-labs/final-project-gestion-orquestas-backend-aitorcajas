@@ -5,7 +5,7 @@ pipeline {
         stage('Cargar y Ejecutar Pipeline Común') {
             steps {
                 script {
-                    def pipelineTemplate = load 'stemdo-labs/iac-ibmcloud-aitorcajas/vars/environmentPipeline.groovy'
+                    def pipelineTemplate = load 'https://github.com/stemdo-labs/iac-ibmcloud-aitorcajas/blob/develop/vars/environmentPipeline.groovy'
                     pipelineTemplate.call()
                 }
             }
