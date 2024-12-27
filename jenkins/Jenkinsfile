@@ -1,9 +1,8 @@
-@Library('prueba') _ as hola
-@Library('ci') _ as holaa
+@Library('prueba')
+@Library('ci')
 // environmentPipeline() 
 
-pipeline {
-    agent any
+
 
     stages {
         stage('Definir Entorno') {
@@ -25,4 +24,3 @@ pipeline {
             }
         }
     }
-}
