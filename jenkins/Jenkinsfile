@@ -1,5 +1,5 @@
-@Library('prueba')
-@Library('ci')
+@Library('prueba') _ as hola
+@Library('ci') _ as holaa
 // environmentPipeline() 
 
 pipeline {
