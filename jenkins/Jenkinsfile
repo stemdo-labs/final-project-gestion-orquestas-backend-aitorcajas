@@ -1,2 +1,28 @@
-@Library('environment') _
-environmentPipeline()
+@Library('prueba') _
+@Library('ci') _
+// environmentPipeline()
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Definir Entorno') {
+            steps {
+                script {
+                    // Llamar a la librería environment para obtener el entorno
+                    def entorno = prueba()
+                    echo "El entorno es: ${entorno}"
+                }
+            }
+        }
+
+        stage('CI Pipeline') {
+            steps {
+                script {
+                    // Pasar la variable 'entorno' a la librería ciPipeline
+                    ci(entorno)
+                }
+            }
+        }
+    }
+}
