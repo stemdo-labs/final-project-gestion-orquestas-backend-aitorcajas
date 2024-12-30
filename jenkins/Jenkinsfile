@@ -23,8 +23,8 @@ pipeline {
         stage('Cargar y Ejecutar Pipeline Común') {
             steps {
                 script {
-                    def environment = readFile('repo-principal/vars/environmentPipeline.groovy')
-                    evaluate(environment)
+                    def environment = load 'repo-principal/vars/environmentPipeline.groovy'
+                    environment.ejecutarPipeline()
                 }
             }
         }
