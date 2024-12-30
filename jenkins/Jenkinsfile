@@ -12,11 +12,19 @@ pipeline {
             }
         }
 
+        stage('Verificar archivo Groovy') {
+            steps {
+                script {
+                    sh 'cat repo-principal/vars/environmentPipeline.groovy'
+                }
+            }
+        }
+
         stage('Cargar y Ejecutar Pipeline Común') {
             steps {
                 script {
                     def environment = load 'repo-principal/vars/environmentPipeline.groovy'
-                    environment.call()
+                    environment.ejecutarPipeline()
                 }
             }
         }
