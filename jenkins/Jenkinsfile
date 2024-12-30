@@ -12,19 +12,19 @@ pipeline {
             }
         }
 
-        stage('Verificar archivo Groovy') {
+        stage('Cargar y Ejecutar Pipeline Común') {
             steps {
                 script {
-                    sh 'cat repo-principal/vars/environmentPipeline.groovy'
+                    def environment = load 'repo-principal/vars/environment.groovy'
+                    environment.pipeline()
                 }
             }
         }
 
-        stage('Cargar y Ejecutar Pipeline Común') {
+        stage('Prueba de variables de entorno') {
             steps {
                 script {
-                    def environment = load 'repo-principal/vars/environmentPipeline.groovy'
-                    environment.ejecutarPipeline()
+                    echo "Entorno definido: ${env.ENVIRONMENT}"
                 }
             }
         }
