@@ -1,5 +1,37 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            label 'charts-builder'
+            defaultContainer 'tools'
+            yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+    - name: tools
+      image: ubuntu:22.04
+      command:
+      - cat
+      tty: true
+      securityContext:
+        privileged: true
+      volumeMounts:
+      - mountPath: "/usr/local/bin"
+        name: bin-volume
+      - mountPath: "/home/jenkins/agent"
+        name: workspace-volume
+      - mountPath: "/var/lib/docker"
+        name: docker-volume
+  volumes:
+  - emptyDir: {}
+    name: bin-volume
+  - emptyDir:
+      medium: ""
+    name: workspace-volume
+  - emptyDir: {}
+    name: docker-volume
+"""
+        }
 
     stages {
         stage('Clonar repositorio principal') {
@@ -12,19 +44,22 @@ pipeline {
             }
         }
 
-        stage('Cargar y Ejecutar Pipeline Común') {
+        stage('Entornos') {
             steps {
                 script {
                     def environment = load 'repo-principal/vars/environment.groovy'
-                    environment.pipeline()
+                    environment.environment()
                 }
             }
         }
 
-        stage('Prueba de variables de entorno') {
+        stage('CI') {
             steps {
                 script {
-                    echo "Entorno definido: ${env.ENVIRONMENT}"
+                    def entorno = env.ENVIRONMENT
+                    def desarrollo = env.DEVELOPMENT
+                    def ci = load 'repo-principal/vars/ci.groovy'
+                    ci.ci(entorno, desarrollo)
                 }
             }
         }
