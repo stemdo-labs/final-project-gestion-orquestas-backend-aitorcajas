@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     def environment = load 'repo-principal/vars/environmentPipeline.groovy'
-                    pipelineTemplate.call()
+                    environment.call()
                 }
             }
         }
