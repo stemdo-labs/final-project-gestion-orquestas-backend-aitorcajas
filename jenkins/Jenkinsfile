@@ -45,7 +45,7 @@ spec:
             }
         }
 
-        stage('Entornos') {
+        stage('Entorno') {
             steps {
                 script {
                     def environment = load 'repo-principal/vars/environment.groovy'
@@ -54,15 +54,15 @@ spec:
             }
         }
 
-        stage('CI') {
-            steps {
-                script {
-                    def entorno = env.ENVIRONMENT
-                    def desarrollo = env.DEVELOPMENT
-                    def ci = load 'repo-principal/vars/ci.groovy'
-                    ci.ci(entorno, desarrollo)
-                }
-            }
-        }
+        // stage('CI') {
+        //     steps {
+        //         script {
+        //             def entorno = env.ENVIRONMENT
+        //             def desarrollo = env.DEVELOPMENT
+        //             def ci = load 'repo-principal/vars/ci.groovy'
+        //             ci.ci(entorno, desarrollo)
+        //         }
+        //     }
+        // }
     }
 }
