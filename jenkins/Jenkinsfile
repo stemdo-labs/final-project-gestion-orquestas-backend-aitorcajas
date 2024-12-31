@@ -83,8 +83,10 @@ pipeline {
         stage('CI') {
             steps {
                 script {
-                    def ci = load 'repo-principal/vars/ci.groovy'
-                    ci.ci(env.ENVIRONMENT, env.DEVELOPMENT)
+                    build job: 'ci', parameters: [
+                      string(name: 'desarrollo', value: env.DEVELOPMENT),
+                      string(name: 'entorno', value: env.ENVIRONMENT)
+                    ]
                 }
             }
         }
