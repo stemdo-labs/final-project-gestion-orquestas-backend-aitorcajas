@@ -55,6 +55,12 @@ pipeline {
         //   }
         // }
 
+        stage('Checkout') {
+          steps {
+            checkout scm
+          }
+        }
+
         stage('Probar docker') {
           steps {
             sh 'docker --version'
