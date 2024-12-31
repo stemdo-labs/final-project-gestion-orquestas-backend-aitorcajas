@@ -64,6 +64,7 @@ pipeline {
         stage('Probar docker') {
           steps {
             sh 'docker --version'
+            sh 'ls'
           }
         }
 
