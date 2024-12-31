@@ -54,6 +54,14 @@ spec:
             }
         }
 
+        stage('Comprobación de pipeline') {
+          steps {
+            script {
+              cat repo-principal/vars/ci.groovy
+            }
+          }
+        }
+
         stage('CI') {
             steps {
                 script {
