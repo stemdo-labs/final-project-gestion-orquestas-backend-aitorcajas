@@ -50,6 +50,12 @@ spec:
           }
         }
 
+        stage('Probar docker') {
+          steps {
+            sh 'docker --version'
+          }
+        }
+
         stage('Clonar repositorio principal') {
             steps {
                 script {
