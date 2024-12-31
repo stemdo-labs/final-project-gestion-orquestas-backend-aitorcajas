@@ -57,10 +57,8 @@ spec:
         stage('CI') {
             steps {
                 script {
-                    def entorno = env.ENVIRONMENT
-                    def desarrollo = env.DEVELOPMENT
                     def ci = load 'repo-principal/vars/ci.groovy'
-                    ci.ci(entorno, desarrollo)
+                    ci.ci(env.ENVIRONMENT, env.DEVELOPMENT)
                 }
             }
         }
