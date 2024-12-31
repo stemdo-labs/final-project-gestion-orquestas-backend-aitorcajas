@@ -54,19 +54,13 @@ spec:
             }
         }
 
-        stage('Comprobación de pipeline') {
-          steps {
-            script {
-                sh 'cat repo-principal/vars/ci.groovy'
-            }
-          }
-        }
-
         stage('CI') {
             steps {
                 script {
+                    def entorno = env.ENVIRONMENT
+                    def desarrollo = env.DEVELOPMENT
                     def ci = load 'repo-principal/vars/ci.groovy'
-                    ci.ci()
+                    ci.ci(entorno, desarrollo)
                 }
             }
         }
