@@ -95,6 +95,7 @@ pipeline {
         stage('CD') {
             steps {
                 script {
+                    echo "repositorio: ${env.REPO}"
                     build job: 'cd', parameters: [
                       string(name: 'desarrollo', value: env.DEVELOPMENT),
                       string(name: 'repo', value: env.REPO)
