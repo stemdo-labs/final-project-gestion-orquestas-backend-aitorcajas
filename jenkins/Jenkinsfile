@@ -61,12 +61,6 @@ pipeline {
           }
         }
 
-        stage('Probar docker') {
-          steps {
-            sh 'docker --version'
-          }
-        }
-
         stage('Clonar repositorio principal') {
             steps {
                 script {
@@ -94,6 +88,14 @@ pipeline {
                       string(name: 'entorno', value: env.ENVIRONMENT),
                       string(name: 'repo', value: env.REPO)
                     ]
+                }
+            }
+        }
+
+        stage('CD') {
+            steps {
+                script {
+                    build job: 'cd'
                 }
             }
         }
