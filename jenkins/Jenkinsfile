@@ -1,8 +1,22 @@
 pipeline {
     agent {
       kubernetes {
-            label 'jenkins-jenkins-agent'
-            defaultContainer 'dind'
+            // label 'jenkins-jenkins-agent'
+            // defaultContainer 'dind'
+            yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jenkins-agent-acajas
+  labels:
+    jenkins: agent
+spec:
+  containers:
+    - name: jenkins-agent-container
+      image: jooeel98/agente-Jenkins:0.2.1
+nodeSelector:
+  role: jenkins-agent
+            """
         }
 
 //         kubernetes {
