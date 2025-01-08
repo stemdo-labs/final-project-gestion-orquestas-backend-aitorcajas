@@ -13,7 +13,9 @@ metadata:
 spec:
   containers:
     - name: jenkins-agent-container
-      image: jooeel98/agente-Jenkins:0.2.1
+      image:
+       repository: jooeel98/agente-jenkins
+       tag: 0.2.1
 nodeSelector:
   role: jenkins-agent
             """
