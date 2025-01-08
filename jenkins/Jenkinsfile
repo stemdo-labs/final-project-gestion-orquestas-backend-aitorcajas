@@ -1,56 +1,42 @@
 pipeline {
     agent {
-      kubernetes {
-            // label 'jenkins-jenkins-agent'
-            // defaultContainer 'dind'
+    //   kubernetes {
+    //         label 'jenkins-jenkins-agent'
+    //         defaultContainer 'dind'
+    //     }
+
+        kubernetes {
+            label 'charts-builder'
+            defaultContainer 'tools'
             yaml """
 apiVersion: v1
 kind: Pod
-metadata:
-  name: jenkins-agent-acajas
-  labels:
-    jenkins: agent
 spec:
   containers:
-    - name: jenkins-agent-container
+    - name: tools
       image: jooeel98/agente-jenkins:0.2.1
-nodeSelector:
-  role: jenkins-agent
-            """
+      command:
+      - cat
+      tty: true
+      securityContext:
+        privileged: true
+      volumeMounts:
+      - mountPath: "/usr/local/bin"
+        name: bin-volume
+      - mountPath: "/home/jenkins/agent"
+        name: workspace-volume
+      - mountPath: "/var/lib/docker"
+        name: docker-volume
+  volumes:
+  - emptyDir: {}
+    name: bin-volume
+  - emptyDir:
+      medium: ""
+    name: workspace-volume
+  - emptyDir: {}
+    name: docker-volume
+"""
         }
-
-//         kubernetes {
-//             label 'charts-builder'
-//             defaultContainer 'tools'
-//             yaml """
-// apiVersion: v1
-// kind: Pod
-// spec:
-//   containers:
-//     - name: tools
-//       image: ubuntu:22.04
-//       command:
-//       - cat
-//       tty: true
-//       securityContext:
-//         privileged: true
-//       volumeMounts:
-//       - mountPath: "/usr/local/bin"
-//         name: bin-volume
-//       - mountPath: "/home/jenkins/agent"
-//         name: workspace-volume
-//       - mountPath: "/var/lib/docker"
-//         name: docker-volume
-//   volumes:
-//   - emptyDir: {}
-//     name: bin-volume
-//   - emptyDir:
-//       medium: ""
-//     name: workspace-volume
-//   - emptyDir: {}
-//     name: docker-volume
-// """
-        // }
     }
 
     stages {
