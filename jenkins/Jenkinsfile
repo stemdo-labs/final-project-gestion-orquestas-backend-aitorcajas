@@ -6,14 +6,14 @@ pipeline {
     //     }
 
         kubernetes {
-            label 'charts-builder'
-            defaultContainer 'tools'
+            label 'jenkins-jenkins-agent'
+            defaultContainer 'dind'
             yaml """
 apiVersion: v1
 kind: Pod
 spec:
   containers:
-    - name: tools
+    - name: dind
       image: jooeel98/agente-jenkins:0.2.1
       command:
       - cat
