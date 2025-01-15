@@ -27,20 +27,14 @@ jobs:
       - name: Compile project
         run: mvn clean package -DskipTests
 
-      # - name: SonarQube analysis
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #   run: mvn sonar:sonar
+      - name: Set build number
+        run: echo "BUILD_NUMBER=$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
 
-      - uses: sonarsource/sonarqube-scan-action@v4
+      - name: SonarQube analysis with Maven
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      # If you wish to fail your job when the Quality Gate is red, uncomment the
-      # following lines. This would typically be used to fail a deployment.
-      # We do not recommend to use this in a pull request. Prefer using pull request
-      # decoration instead.
-      # - uses: sonarsource/sonarqube-quality-gate-action@v1
-      #   timeout-minutes: 5
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn sonar:sonar \
+             -Dsonar.projectVersion=$BUILD_NUMBER \
+             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+             -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
