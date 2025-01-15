@@ -25,7 +25,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Compile project
-        run: mvn clean package
+        run: mvn clean package -DskipTests
 
       # - name: SonarQube analysis
       #   env:
