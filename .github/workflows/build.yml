@@ -24,17 +24,14 @@ jobs:
       - name: Compile project
         run: mvn clean package -DskipTests
 
-      - name: Set hash in sonar-project.properties
+      - name: Extraer versión
+        id: version
         run: |
-          HASH_FULL=$GITHUB_SHA
-          BASE_URL="https://github.com/stemdo-labs/final-project-gestion-orquestas-backend-aitorcajas/commit/"
-          FULL_URL="${BASE_URL}${HASH_FULL}"
-          
-          # Reemplazar o añadir la línea en sonar-project.properties
+          VERSION=$(grep -oP '<version>\K[^\<]+' pom.xml | sed -n '2p')
           if grep -q "^sonar.projectVersion=" sonar-project.properties; then
-            sed -i "s|^sonar.projectVersion=.*|sonar.projectVersion=$FULL_URL|" sonar-project.properties
+            sed -i "s/^sonar.projectVersion=.*/sonar.projectVersion=$VERSION/" sonar-project.properties
           else
-            echo "sonar.projectVersion=$FULL_URL" >> sonar-project.properties
+            echo "sonar.projectVersion=$VERSION" >> sonar-project.properties
           fi
 
       - uses: sonarsource/sonarqube-scan-action@v4
