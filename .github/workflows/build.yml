@@ -26,11 +26,15 @@ jobs:
 
       - name: Set hash in sonar-project.properties
         run: |
-          HASH_SHORT=${GITHUB_SHA::7}
+          HASH_FULL=$GITHUB_SHA
+          BASE_URL="https://github.com/stemdo-labs/final-project-gestion-orquestas-backend-aitorcajas/commit/"
+          FULL_URL="${BASE_URL}${HASH_FULL}"
+          
+          # Reemplazar o añadir la línea en sonar-project.properties
           if grep -q "^sonar.projectVersion=" sonar-project.properties; then
-            sed -i "s/^sonar.projectVersion=.*/sonar.projectVersion=$HASH_SHORT/" sonar-project.properties
+            sed -i "s|^sonar.projectVersion=.*|sonar.projectVersion=$FULL_URL|" sonar-project.properties
           else
-            echo "sonar.projectVersion=$HASH_SHORT" >> sonar-project.properties
+            echo "sonar.projectVersion=$FULL_URL" >> sonar-project.properties
           fi
 
       - uses: sonarsource/sonarqube-scan-action@v4
