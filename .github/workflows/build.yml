@@ -15,15 +15,6 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-      - name: Set hash in sonar-project.properties
-        run: |
-          HASH_SHORT=${GITHUB_SHA::7}
-          if grep -q "^sonar.projectVersion=" sonar-project.properties; then
-            sed -i "s/^sonar.projectVersion=.*/sonar.projectVersion=$HASH_SHORT/" sonar-project.properties
-          else
-            echo "sonar.projectVersion=$HASH_SHORT" >> sonar-project.properties
-          fi
-
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -41,6 +32,16 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+
+      - name: Set hash in sonar-project.properties
+        run: |
+          HASH_SHORT=${GITHUB_SHA::7}
+          if grep -q "^sonar.projectVersion=" sonar-project.properties; then
+            sed -i "s/^sonar.projectVersion=.*/sonar.projectVersion=$HASH_SHORT/" sonar-project.properties
+          else
+            echo "sonar.projectVersion=$HASH_SHORT" >> sonar-project.properties
+          fi
+
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
