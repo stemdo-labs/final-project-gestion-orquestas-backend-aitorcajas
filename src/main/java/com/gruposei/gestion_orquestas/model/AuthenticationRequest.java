@@ -8,7 +8,7 @@ public class AuthenticationRequest {
     public AuthenticationRequest() {
     }
 
-    // Esto es una prueba
+    // Esto es una prueba de sonar
 
     public AuthenticationRequest(String username, String password) {
         this.username = username;
