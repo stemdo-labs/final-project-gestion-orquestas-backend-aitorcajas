@@ -44,7 +44,7 @@ jobs:
 
   ci:
     needs: [environment, sonar]
-    uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/ci.yml@main
+    uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/ci.yml@develop
     with:
       entorno: ${{ needs.environment.outputs.entorno }}
       desarrollo: ${{ needs.environment.outputs.desarrollo }}
@@ -52,7 +52,7 @@ jobs:
 
   cd:
     needs: [ci, environment]
-    uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/cd.yml@main
+    uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/cd.yml@develop
     with:
       desarrollo: ${{ needs.environment.outputs.desarrollo }}
       entorno: ${{ needs.environment.outputs.entorno }}
