@@ -43,11 +43,12 @@ jobs:
     secrets: inherit
 
   ci:
-    needs: [environment, sonar]
+    needs: [environment, build, sonar]
     uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/ci.yml@develop
     with:
       entorno: ${{ needs.environment.outputs.entorno }}
       desarrollo: ${{ needs.environment.outputs.desarrollo }}
+      version: ${{ needs.build.outputs.version }}
     secrets: inherit
 
   cd:
