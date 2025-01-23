@@ -41,3 +41,19 @@ jobs:
       project_key: ${{ needs.build.outputs.project_key }}
       entorno: ${{ needs.environment.outputs.entorno }}
     secrets: inherit
+
+  ci:
+    needs: [environment, sonar]
+    uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/ci.yml@main
+    with:
+      entorno: ${{ needs.environment.outputs.entorno }}
+      desarrollo: ${{ needs.environment.outputs.desarrollo }}
+    secrets: inherit
+
+  cd:
+    needs: [ci, environment]
+    uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/cd.yml@main
+    with:
+      desarrollo: ${{ needs.environment.outputs.desarrollo }}
+      entorno: ${{ needs.environment.outputs.entorno }}
+    secrets: inherit
