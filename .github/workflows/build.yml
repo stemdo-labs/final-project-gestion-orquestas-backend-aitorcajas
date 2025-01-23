@@ -4,9 +4,14 @@ on:
   workflow_dispatch:
 
 jobs:
+  environment:
+    uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/environment.yml@main
+
   build:
+    needs: environment
     name: Build and analyze
     runs-on: ubuntu-latest
+    environment: ${{ needs.environment.outputs.entorno }}
     outputs:
       version: ${{ steps.version.outputs.VERSION }}
       project_key: ${{ steps.project_key.outputs.KEY }}
@@ -29,9 +34,10 @@ jobs:
           echo "KEY=$KEY" >> $GITHUB_OUTPUT
 
   sonar:
-    needs: build
+    needs: [environment, build]
     uses: stemdo-labs/S-SDLC_SonarQube/.github/workflows/sonarqube-analysis.yml@acajas-branch
     with:
       version: ${{ needs.build.outputs.version }}
       project_key: ${{ needs.build.outputs.project_key }}
+      entorno: ${{ needs.environment.outputs.entorno }}
     secrets: inherit
