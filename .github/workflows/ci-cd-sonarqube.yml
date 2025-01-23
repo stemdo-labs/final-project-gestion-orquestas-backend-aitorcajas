@@ -51,10 +51,10 @@ jobs:
       version: ${{ needs.build.outputs.version }}
     secrets: inherit
 
-  # cd:
-  #   needs: [ci, entorno]
-  #   uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/cd.yml@develop
-  #   with:
-  #     desarrollo: ${{ needs.entorno.outputs.desarrollo }}
-  #     entorno: ${{ needs.entorno.outputs.entorno }}
-  #   secrets: inherit
+  cd:
+    needs: [ci, entorno]
+    uses: stemdo-labs/final-project-exercise-aitorcajas/.github/workflows/cd.yml@develop
+    with:
+      desarrollo: ${{ needs.entorno.outputs.desarrollo }}
+      entorno: ${{ needs.entorno.outputs.entorno }}
+    secrets: inherit
